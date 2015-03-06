@@ -1,3 +1,10 @@
+## The code bellow, should be run from start to finish
+## Each command is one step and if you jump any step, it could not work properly
+## In the wnd, you will have your .png in a file called plot4.png
+
+##Setting locale/language to english
+Sys.setlocale("LC_TIME", "English")
+
 ## Loading the dataset
 dataset_url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
 download.file(dataset_url, "eletricpower.zip")
@@ -21,8 +28,6 @@ df <- data[data$Date >= '2007-02-01' & data$Date <= '2007-02-02',]
 ## Creating a new colum for timestamp (Date + Time)
 df <- transform(df, timestamp=paste(Date, Time, sep = " "))
 ##Tranform timestamp from character to Date(POSIXlt)
-##Obs: "format" may vary by R locale/language
-#Here the data are show as YYYY-MM-DD. Ex: '2007-02-01'
 df$timestamp <- strptime(df$timestamp, format="%Y-%m-%d %H:%M:%S")
 
 # Open the PNG graphics device to create a file with 
@@ -30,9 +35,10 @@ df$timestamp <- strptime(df$timestamp, format="%Y-%m-%d %H:%M:%S")
 png(filename = "plot4.png",
     width = 480, height = 480, units = "px")
 
+#Config a 2x2 graph
 par(mfrow = c(2, 2))
 
-#Plot number 1 - Global Active Power
+#Plot graph 1 - Global Active Power
 plot(df$timestamp,
      df$Global_active_power,
      type="l", 
@@ -40,7 +46,7 @@ plot(df$timestamp,
      xlab= ""
 )
 
-#Plot number 2 - Voltage
+#Plot graph 2 - Voltage
 plot(df$timestamp,
      df$Voltage,
      type="l", 
@@ -48,7 +54,7 @@ plot(df$timestamp,
      xlab= "datetime"
 )
 
-#Plot numer 3 without border on legend box - Energy sub metering
+#Plot graph 3 without border on legend box - Energy sub metering
 plot(df$timestamp, df$Sub_metering_1,  
      type = "n",
      ylab = "Energy sub metering",
@@ -65,16 +71,13 @@ lines(df$timestamp,
 legend("topright", col = c("black", "red", "blue"), legend = colnames(df[7:9]),
        lty=c(1,1,1), bty="n")
 
-#Plot number 4 - Global_reactive_power:
+#Plot graph 4 - Global_reactive_power:
 plot(df$timestamp,
      df$Global_reactive_power,
      type="l", 
      ylab="Global_reactive_power",
      xlab= "datetime"
 )
-
-#Obs: Since i'm running in a Portuguese environment, days at .png are in portuguese
-# So, you should see "qui", "sex", "sáb" besides "thu", "fri", "sat"
 
 #Closing the device
 dev.off()

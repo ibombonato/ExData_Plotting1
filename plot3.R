@@ -1,3 +1,10 @@
+## The code bellow, should be run from start to finish
+## Each command is one step and if you jump any step, it could not work properly
+## In the wnd, you will have your .png in a file called plot3.png
+
+##Setting locale/language to english
+Sys.setlocale("LC_TIME", "English")
+
 ## Loading the dataset
 dataset_url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
 download.file(dataset_url, "eletricpower.zip")
@@ -21,8 +28,6 @@ df <- data[data$Date >= '2007-02-01' & data$Date <= '2007-02-02',]
 ## Creating a new colum for timestamp (Date + Time)
 df <- transform(df, timestamp=paste(Date, Time, sep = " "))
 ##Tranform timestamp from character to Date(POSIXlt)
-##Obs: "format" may vary by R locale/language
-#Here the data are show as YYYY-MM-DD. Ex: '2007-02-01'
 df$timestamp <- strptime(df$timestamp, format="%Y-%m-%d %H:%M:%S")
 
 # Open the PNG graphics device to create a file with 
@@ -51,8 +56,6 @@ lines(df$timestamp,
 #Adding the legend
 legend("topright", col = c("black", "red", "blue"), legend = colnames(df[7:9]),
        lty=c(1,1,1))
-#Obs: Since i'm running in a Portuguese environment, days at .png are in portuguese
-# So, you should see "qui", "sex", "sáb" besides "thu", "fri", "sat"
 
 #Closing the device
 dev.off()

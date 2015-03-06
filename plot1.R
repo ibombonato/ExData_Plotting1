@@ -1,3 +1,10 @@
+## The code bellow, should be run from start to finish
+## Each command is one step and if you jump any step, it could not work properly
+## In the wnd, you will have your .png in a file called plot1.png
+
+##Setting locale/language to english
+Sys.setlocale("LC_TIME", "English")
+
 ## Loading the dataset
 dataset_url <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
 download.file(dataset_url, "eletricpower.zip")
